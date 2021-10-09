@@ -8,14 +8,16 @@ int playerWin;
 int attempts;
 int guessedNumber;
 int randomNumber;
+int lastGuessed;
 
-void setup() {
+void setup() {  
   arduboy.begin();
   arduboy.clear();
 
   playerWin = 0;
   attempts = 0;
   guessedNumber = 0;
+  lastGuessed = 0;
 
   arduboy.initRandomSeed();
   randomNumber = random(1, 101);
@@ -49,6 +51,7 @@ void loop() {
           playerWin = 1;
         } else {
           attempts = attempts + 1;
+          lastGuessed = guessedNumber;
         }
       }
       arduboy.setCursor(0, 0);
@@ -57,13 +60,24 @@ void loop() {
       arduboy.print("\n");
       arduboy.print("Number to guess: ");
       arduboy.print(guessedNumber);
+      arduboy.print("\n");
+      if (attempts == 0) {
+        arduboy.print("Good luck!");
+      } else {
+        arduboy.print(lastGuessed);
+        if (lastGuessed > randomNumber) {
+          arduboy.print(" is too high.");
+        } else {
+          arduboy.print(" is too low.");
+        }
+      }
     }
   } else {
     arduboy.setCursor(0, 0);
     arduboy.print("YOU WON!");
     arduboy.print("\n");
     arduboy.print("Corrct number: ");
-
+    arduboy.print(randomNumber);
     if (arduboy.justPressed(A_BUTTON)) {
       randomNumber = random(1, 101);
       attempts = 0;

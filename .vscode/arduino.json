@@ -1,0 +1,5 @@
+{
+    "board": "arduboy:avr:arduboy",
+    "port": "/dev/cu.usbmodem11101",
+    "sketch": "5_yourFirstGame/sketch_oct02c/sketch_oct02c.ino"
+}
