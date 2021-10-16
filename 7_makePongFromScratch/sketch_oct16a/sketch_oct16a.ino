@@ -11,6 +11,10 @@ int bally = 0;
 int ballsize = 4;
 int ballright = 1;
 int balldown = 1;
+int paddlewidth = 4;
+int paddleheight = 9;
+int playerx = 0;
+int playery = 0;
 
 void setup() {
   arduboy.begin();
@@ -42,6 +46,17 @@ void loop() {
     arduboy.setCursor(0, 0);
     arduboy.print("Gameplay");
 
+    // draw player paddle
+    arduboy.fillRect(playerx, playery, paddlewidth, paddleheight, WHITE);
+
+    if (arduboy.pressed(UP_BUTTON) and playery > 0) {
+      playery = playery - 1;
+    }
+    if (arduboy.pressed(DOWN_BUTTON) and playery + paddleheight < 63) {
+      playery = playery + 1;
+    }
+
+    // draw ball
     arduboy.fillRect(ballx, bally, ballsize, ballsize, WHITE);
 
     if (ballright == 1) {
