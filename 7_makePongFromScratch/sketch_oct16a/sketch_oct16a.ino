@@ -49,7 +49,7 @@ void loop() {
       ballx = ballx + 1;
     }
     if (balldown == 1) {
-      bally = bally + 1;
+      ballx = ballx + 1;
     }
     if (ballx == 0) {
       ballright = 1;
