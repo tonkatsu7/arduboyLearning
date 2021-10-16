@@ -44,12 +44,11 @@ void loop() {
     if (arduboy.justPressed(A_BUTTON)) {
       gamestate = 2;
     }
-    arduboy.fillRect(ballx, bally, ballsize, ballsize, WHITE);
     if (ballright == 1) {
       ballx = ballx + 1;
     }
-    if (balldown == 1) {
-      ballx = ballx + 1;
+    if (ballright == -1) {
+      ballx = ballx - 1;
     }
     if (ballx == 0) {
       ballright = 1;
@@ -57,6 +56,7 @@ void loop() {
     if (ballx == 127) {
       ballright = -1;
     }
+    arduboy.fillRect(ballx, bally, ballsize, ballsize, WHITE);
     break;
 
   case 2:
