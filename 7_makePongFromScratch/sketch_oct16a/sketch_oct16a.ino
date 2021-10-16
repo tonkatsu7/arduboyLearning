@@ -41,9 +41,9 @@ void loop() {
     // gameplay screen
     arduboy.setCursor(0, 0);
     arduboy.print("Gameplay");
-    if (arduboy.justPressed(A_BUTTON)) {
-      gamestate = 2;
-    }
+
+    arduboy.fillRect(ballx, bally, ballsize, ballsize, WHITE);
+
     if (ballright == 1) {
       ballx = ballx + 1;
     }
@@ -53,10 +53,26 @@ void loop() {
     if (ballx == 0) {
       ballright = 1;
     }
-    if (ballx == 127) {
+    if (ballx + ballsize == 127) {
       ballright = -1;
     }
-    arduboy.fillRect(ballx, bally, ballsize, ballsize, WHITE);
+
+    if (balldown == 1) {
+      bally = bally + 1;
+    }
+    if (balldown == -1) {
+      bally = bally - 1;
+    }
+    if (bally == 0) {
+      balldown = 1;
+    }
+    if (bally + ballsize == 63) {
+      balldown = -1;
+    }
+
+    if (arduboy.justPressed(A_BUTTON)) {
+      gamestate = 2;
+    }
     break;
 
   case 2:
