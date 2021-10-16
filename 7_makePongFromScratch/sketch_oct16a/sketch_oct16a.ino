@@ -15,6 +15,8 @@ int paddlewidth = 4;
 int paddleheight = 9;
 int playerx = 0;
 int playery = 0;
+int computerx = 127 - paddlewidth;
+int computery = 0;
 
 void setup() {
   arduboy.begin();
@@ -49,11 +51,21 @@ void loop() {
     // draw player paddle
     arduboy.fillRect(playerx, playery, paddlewidth, paddleheight, WHITE);
 
-    if (arduboy.pressed(UP_BUTTON) and playery > 0) {
+    if (arduboy.pressed(UP_BUTTON) && playery > 0) {
       playery = playery - 1;
     }
-    if (arduboy.pressed(DOWN_BUTTON) and playery + paddleheight < 63) {
+    if (arduboy.pressed(DOWN_BUTTON) && playery + paddleheight < 63) {
       playery = playery + 1;
+    }
+
+    // draw computer paddle
+    arduboy.fillRect(computerx, computery, paddlewidth, paddleheight, WHITE);
+
+    if (bally < computery) {
+      computery = computery - 1;
+    }
+    if (bally + ballsize > computery + paddleheight) {
+      computery = computery + 1;
     }
 
     // draw ball
