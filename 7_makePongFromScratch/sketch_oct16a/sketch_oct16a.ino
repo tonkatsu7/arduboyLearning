@@ -70,17 +70,20 @@ void loop() {
 
     // draw ball
     arduboy.fillRect(ballx, bally, ballsize, ballsize, WHITE);
-
+    // ball moves right
     if (ballright == 1) {
       ballx = ballx + 1;
     }
+    // ball moves left
     if (ballright == -1) {
       ballx = ballx - 1;
     }
-    if (ballx == 0) {
+    // ball bounces from right to left
+    if (ballx == playerx + paddlewidth && playery < bally + ballsize && playery + paddleheight > bally) {
       ballright = 1;
     }
-    if (ballx + ballsize == 127) {
+    // ball bounces from right to left
+    if (ballx + ballsize == computerx && computery < bally + ballsize && computery + paddleheight > bally) {
       ballright = -1;
     }
 
