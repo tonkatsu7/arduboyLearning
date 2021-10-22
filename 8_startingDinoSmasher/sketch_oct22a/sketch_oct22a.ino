@@ -30,7 +30,7 @@ const unsigned char tiles[] PROGMEM = {
 0x20, 0x40, 0x40, 0x20, 0x00, 0x01, 0x02, 0x02, 0x01, 0x02, 0x02, 0x01, 0x02, 0x21, 0x40, 0x40, 
 
 
-// tree
+// tre
 0xff, 0x1f, 0x5b, 0x3f, 0xeb, 0xdd, 0xff, 0xf7, 0xbb, 0xef, 0xfd, 0x7f, 0xe3, 0xcb, 0xe3, 0xff, 
 0xff, 0xc7, 0x96, 0xc7, 0xff, 0xff, 0xef, 0xfd, 0xff, 0xe3, 0xcb, 0xe3, 0xff, 0xff, 0x7b, 0xff, 
 
@@ -70,9 +70,12 @@ void move_down() {
   player_y += SPEED;
 }
 void drawWorld() {
-  for (int j = 0; j < WORLD_HEIGHT; j++) {
-    for (int i = 0; i < WORLD_WIDTH; i++) {
-      Sprites::drawOverwrite(i * TILE_SIZE + mapx, j * TILE_SIZE + mapy, tiles, world[j][i]);
+  const int tilesWide = WIDTH / TILE_SIZE + 1;
+  const int tilesTall = HEIGHT / TILE_SIZE + 1;
+
+  for (int j = 0; j < tilesTall; j++) {
+    for (int i = 0; i < tilesWide; i++) {
+      Sprites::drawOverwrite(i * TILE_SIZE + mapx % 10, j * TILE_SIZE + mapy % 10, tiles, world[j][i]);
     }
     arduboy.print("\n");
   }
