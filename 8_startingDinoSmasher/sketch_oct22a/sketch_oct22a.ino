@@ -75,10 +75,20 @@ void drawWorld() {
 
   for (int j = 0; j < tilesTall; j++) {
     for (int i = 0; i < tilesWide; i++) {
-      Sprites::drawOverwrite(i * TILE_SIZE + mapx % 10, j * TILE_SIZE + mapy % 10, tiles, world[j][i]);
+      const int tilex = i - mapx / TILE_SIZE;
+      const int tiley = j - mapy / TILE_SIZE;
+      Sprites::drawOverwrite(i * TILE_SIZE + mapx % TILE_SIZE, j * TILE_SIZE + mapy % TILE_SIZE, tiles, world[tilex][tiley]);
     }
     arduboy.print("\n");
   }
+
+  arduboy.fillRect(WIDTH / 2 - 8, HEIGHT / 2 - 8, 16, 16, BLACK);
+
+  arduboy.fillRect(0, 0, 48, 8, BLACK);
+  arduboy.setCursor(0, 0);
+  arduboy.print(0 - mapx / TILE_SIZE);
+  arduboy.print(",");
+  arduboy.print(0 - mapy / TILE_SIZE);
 }
 
 void playerInput() {
@@ -105,9 +115,6 @@ void titleScreen() {
 }
 
 void gameplay() {
-  arduboy.setCursor(0, 0);
-  arduboy.print("Gameplay\n");
-
   playerInput();
   drawWorld();
 
