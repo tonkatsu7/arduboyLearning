@@ -9,8 +9,8 @@
 #define GAME_PLAY   1
 #define GAME_OVER   2
 #define GAME_HIGH   3
-#define WORLD_WIDTH   8
-#define WORLD_HEIGHT  4
+#define WORLD_WIDTH   14
+#define WORLD_HEIGHT  7
 #define TILE_SIZE   16
 #define GRASS       0
 #define WATER       1
@@ -44,12 +44,17 @@ Arduboy2 arduboy;
 int player_x = 0;
 int player_y = 0;
 int gamestate = GAME_TITLE;
+int mapx = 0;
+int mapy = 0;
 
 int world[WORLD_HEIGHT][WORLD_WIDTH] = {
-  { TREES, GRASS, GRASS, WATER, GRASS, GRASS, GRASS, TREES },
-  { GRASS, WATER, WATER, WATER, GRASS, WATER, GRASS, GRASS },
-  { GRASS, GRASS, GRASS, GRASS, GRASS, WATER, STONE, GRASS },
-  { STONE, GRASS, GRASS, STONE, TREES, WATER, WATER, WATER }
+  { TREES, GRASS, GRASS, WATER, GRASS, GRASS, GRASS, TREES, GRASS, GRASS, GRASS, GRASS, GRASS, TREES },
+  { GRASS, WATER, WATER, WATER, GRASS, WATER, GRASS, GRASS, GRASS, GRASS, GRASS, STONE, GRASS, GRASS },
+  { GRASS, GRASS, GRASS, GRASS, GRASS, WATER, STONE, GRASS, GRASS, GRASS, TREES, GRASS, GRASS, GRASS },
+  { STONE, GRASS, GRASS, STONE, TREES, WATER, WATER, WATER, GRASS, WATER, WATER, GRASS, TREES, GRASS },
+  { GRASS, GRASS, GRASS, GRASS, TREES, GRASS, GRASS, GRASS, TREES, WATER, GRASS, GRASS, STONE, TREES },
+  { GRASS, GRASS, GRASS, WATER, STONE, GRASS, GRASS, TREES, TREES, TREES, GRASS, GRASS, WATER, WATER },
+  { GRASS, WATER, WATER, TREES, GRASS, WATER, WATER, TREES, TREES, GRASS, GRASS, GRASS, GRASS, STONE }
 };
 
 void move_left() {
@@ -67,9 +72,24 @@ void move_down() {
 void drawWorld() {
   for (int j = 0; j < WORLD_HEIGHT; j++) {
     for (int i = 0; i < WORLD_WIDTH; i++) {
-      Sprites::drawOverwrite(i * TILE_SIZE, j * TILE_SIZE, tiles, world[j][i]);
+      Sprites::drawOverwrite(i * TILE_SIZE + mapx, j * TILE_SIZE + mapy, tiles, world[j][i]);
     }
     arduboy.print("\n");
+  }
+}
+
+void playerInput() {
+  if (arduboy.pressed(UP_BUTTON)) {
+    mapy += 1;
+  }
+  if (arduboy.pressed(DOWN_BUTTON)) {
+    mapy -= 1;
+  }
+  if (arduboy.pressed(LEFT_BUTTON)) {
+    mapx += 1;
+  }
+  if (arduboy.pressed(RIGHT_BUTTON)) {
+    mapx -= 1;
   }
 }
 
@@ -85,6 +105,7 @@ void gameplay() {
   arduboy.setCursor(0, 0);
   arduboy.print("Gameplay\n");
 
+  playerInput();
   drawWorld();
 
   if (arduboy.justPressed(A_BUTTON)) {
