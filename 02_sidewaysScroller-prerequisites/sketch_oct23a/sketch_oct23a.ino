@@ -275,7 +275,34 @@ void updateSteve() {
     }
   }
   else {
-    // TODO
+    // running
+    if (arduboy.everyXFrames(9)) {
+      switch (steve.stance)
+      {
+      case Stance::Running1:
+        steve.stance = Stance::Running2;
+        break;
+
+      case Stance::Running2:
+        steve.stance = Stance::Running1;
+        break;
+      
+      case Stance::Ducking1:
+        steve.stance = Stance::Ducking2;
+        break;
+
+      case Stance::Ducking2:
+        steve.stance = Stance::Ducking1;
+        break;
+
+      case Stance::Dead1:
+        steve.stance = Stance::Dead2;
+        break;
+
+      default:
+        break;
+      }
+    }
   }
 }
 
