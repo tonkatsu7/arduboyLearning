@@ -4,7 +4,7 @@
 
 #include <Arduboy2.h>
 
-#define GROUND_LEVEL        21
+#define GROUND_LEVEL        55
 #define STEVE_GROUND_LEVEL  GROUND_LEVEL + 7
 #define SPEED               2
 
@@ -144,6 +144,8 @@ const uint8_t *steve_masks[] = {
   dinosaur_dead_2_mask,
 };
 
+const uint8_t jumpCoords[] = {55, 52, 47, 43, 40, 38, 36, 34, 33, 31, 30, 29, 28, 27, 26, 25, 24, 24, 23, 23, 22, 22, 21, 21, 20, 20, 20, 20, 19, 19, 19, 19, 19, 20, 20, 20, 20, 21, 21, 22, 22, 23, 23, 24, 24, 25, 26, 27, 28, 29, 30, 31, 33, 34, 36, 38, 40, 43, 47, 51, 55 };
+
 struct Steve
 {
   uint8_t x;
@@ -261,6 +263,22 @@ void drawGround() {
   }
 }
 
+void updateSteve() {
+  if (steve.jumping) {
+    steve.y = jumpCoords[steve.jumpIndex];
+    steve.jumpIndex++;
+
+    if (steve.jumpIndex == sizeof(jumpCoords)) {
+      steve.jumping = false;
+      steve.jumpIndex = 0;
+      steve.y = STEVE_GROUND_LEVEL;
+    }
+  }
+  else {
+    // TODO
+  }
+}
+
 void drawSteve() {
   uint8_t imageIndex = static_cast<uint8_t>(steve.stance);
 
@@ -304,6 +322,7 @@ void loop() {
           steve.stance = Stance::Running1;
         }
   }
+  updateSteve();
   drawGround();
   drawSteve();
   arduboy.display();
