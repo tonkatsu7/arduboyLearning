@@ -1,5 +1,0 @@
-{
-    "port": "/dev/cu.usbmodem11101",
-    "board": "arduboy:avr:arduboy",
-    "sketch": "sketch_oct22a/sketch_oct22a.ino"
-}
